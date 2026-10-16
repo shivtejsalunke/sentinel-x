@@ -1,0 +1,11 @@
+{
+  "dataset_id": "SYNTH-EVENTS-001",
+  "version": "1.0.0",
+  "purpose": "API and assessment smoke-test data",
+  "synthetic": true,
+  "records": [
+    {"sequence_number": 1, "scenario_time_ms": 12000, "event_type": "classification_submitted", "payload": {"observation_id": "obs-001", "response_category": "category_a", "confidence": 0.8}},
+    {"sequence_number": 2, "scenario_time_ms": 23800, "event_type": "classification_submitted", "payload": {"observation_id": "obs-002", "response_category": "category_c", "confidence": 0.9}},
+    {"sequence_number": 3, "scenario_time_ms": 31000, "event_type": "classification_submitted", "payload": {"observation_id": "obs-003", "response_category": "no_observation", "confidence": 0.7}}
+  ]
+}
