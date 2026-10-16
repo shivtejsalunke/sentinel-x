@@ -162,13 +162,14 @@ Use synthetic identifiers in development. Do not commit trainee personal data, a
 ## Development checks
 
 ```bash
-ruff check services/assessment
-ruff format --check services/assessment
-mypy services/assessment/app
+cd services/assessment
+ruff check app tests
+ruff format --check app tests
+mypy app
 pytest
 ```
 
-GitHub Actions runs the automated quality checks on pushes and pull requests. The Unity scaffolding is not compiled by this Python workflow; add Unity Test Framework Edit Mode and Play Mode jobs when a complete Unity project and required licensing/runner configuration are available.
+GitHub Actions runs Python correctness, static type checking, and automated tests on relevant pushes and pull requests. Unity source is maintained separately and is not compiled by the Python workflow.
 
 ## Documentation
 
