@@ -58,3 +58,15 @@ def test_scenario_observations_include_prompts_but_not_ground_truth(service_clie
     assert "expected_category" not in response.text
     assert "is_relevant" not in response.text
     assert client.get("/api/v1/scenarios/UNKNOWN/observations").status_code == 404
+
+
+def test_incomplete_session_cannot_be_assessed(service_client):
+    client = service_client
+    session = client.post(
+        "/api/v1/sessions",
+        json={"trainee_id": "trainee-demo", "scenario_id": "OBS-001", "seed": 19},
+    ).json()
+    response = client.post(f"/api/v1/sessions/{session['session_id']}/complete")
+    assert response.status_code == 409
+    assert response.json()["detail"]["code"] == "session_observations_incomplete"
+    assert client.get(f"/api/v1/sessions/{session['session_id']}/assessment").status_code == 409
