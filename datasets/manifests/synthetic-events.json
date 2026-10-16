@@ -1,0 +1,13 @@
+{
+  "manifest_id": "MANIFEST-SYNTH-EVENTS-001",
+  "dataset_path": "datasets/synthetic/session-events.example.json",
+  "version": "1.0.0",
+  "provenance": "Created for this repository as synthetic test data.",
+  "contains_personal_data": false,
+  "contains_operational_data": false,
+  "license": "MIT project licence applies to the example fixture unless otherwise stated.",
+  "known_limitations": [
+    "Not collected from real trainees or field observations.",
+    "Not suitable for estimating real-world sensor performance or learning effectiveness."
+  ]
+}
