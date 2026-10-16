@@ -1,5 +1,8 @@
 # SENTINEL-X
 
+[![Assessment Service CI](https://github.com/shivtejsalunke/sentinel-x/actions/workflows/assessment-ci.yml/badge.svg?branch=main)](https://github.com/shivtejsalunke/sentinel-x/actions/workflows/assessment-ci.yml)
+
+
 **Adaptive simulation, training assessment, and readiness platform**
 
 SENTINEL-X is a desktop-first training system for controlled, reproducible simulation exercises. It connects scenario configuration, simulated observations, structured trainee decisions, deterministic assessment, after-action review (AAR), and targeted practice recommendations in one auditable workflow.
