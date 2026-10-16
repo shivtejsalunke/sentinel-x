@@ -1,6 +1,6 @@
 version: 2
 updates:
-  - package-ecosystem: "pip"
-    directory: "/services/assessment"
+  - package-ecosystem: pip
+    directory: /services/assessment
     schedule:
-      interval: "weekly"
+      interval: weekly
