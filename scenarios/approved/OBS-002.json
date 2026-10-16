@@ -1,0 +1,18 @@
+{
+  "scenario_id": "OBS-002",
+  "version": "1.0.0",
+  "title": "Degraded Observation and Uncertainty",
+  "description": "Synthetic exercise using reduced observation quality to practise calibrated confidence and careful reporting.",
+  "rubric_id": "RUBRIC-001",
+  "rubric_version": "1.0.0-provisional",
+  "approval_status": "instructor_approved",
+  "difficulty_band": "intermediate",
+  "learning_objectives": ["classification_accuracy", "decision_quality", "observation_quality", "uncertainty_reporting"],
+  "allowed_response_categories": ["category_a", "category_b", "category_c", "no_observation"],
+  "environment": {"preset": "training_low_visibility", "visibility_band": "degraded"},
+  "observations": [
+    {"observation_id": "obs-101", "display_prompt": "Synthetic low-quality observation A. Record a category and calibrated confidence.", "expected_category": "category_b", "is_relevant": true},
+    {"observation_id": "obs-102", "display_prompt": "Synthetic ambiguous observation B. Record the category best supported by available evidence.", "expected_category": "category_c", "is_relevant": true},
+    {"observation_id": "obs-103", "display_prompt": "Synthetic background observation. Record no observation when evidence does not support a relevant category.", "expected_category": "no_observation", "is_relevant": false}
+  ]
+}
