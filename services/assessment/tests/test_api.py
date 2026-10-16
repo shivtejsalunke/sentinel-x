@@ -47,3 +47,14 @@ def test_invalid_observation_and_unknown_scenario_are_rejected(service_client):
         "scenario_time_ms":1000,"event_type":"classification_submitted",
         "payload":{"observation_id":"missing","response_category":"category_a","confidence":0.5}})
     assert bad.status_code==422
+
+def test_scenario_observations_include_prompts_but_not_ground_truth(service_client):
+    client = service_client
+    response = client.get("/api/v1/scenarios/OBS-001/observations")
+    assert response.status_code == 200
+    body = response.json()
+    assert len(body["observations"]) == 3
+    assert "display_prompt" in body["observations"][0]
+    assert "expected_category" not in response.text
+    assert "is_relevant" not in response.text
+    assert client.get("/api/v1/scenarios/UNKNOWN/observations").status_code == 404
