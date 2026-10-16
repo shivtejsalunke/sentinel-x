@@ -1,22 +1,28 @@
 # Unity simulation client
 
-This directory reserves the Unity client workstream for the interactive 3D environment described in the product architecture. The assessment service and scenario/event contracts are implemented independently so they can be tested before a complete 3D client is available.
+The Unity project under this directory contains a runtime-generated training UI and an HTTP client for the local SENTINEL-X assessment service. The first increment supports the synthetic OBS-001 scenario, ordered classification submissions, session completion, and display of the returned score.
 
-## Current status
+## Open and run
 
-The repository contains source scaffolding, but not a complete Unity project: there is no `ProjectSettings/ProjectVersion.txt`, `Packages/manifest.json`, finished scene, or tested renderer. The existence of a directory is not evidence of a working 3D simulation.
+1. Install Unity Hub and a compatible Unity 6 editor.
+2. Open this `simulation/` directory as the Unity project.
+3. Start the assessment API following `services/assessment/README.md`.
+4. Enter `http://127.0.0.1:8000` in the client and select **Start Scenario**.
+5. Submit one response for each prompt and complete the session.
 
-## Integration contract
+The client uses loopback by default and is intended for local testing. A desktop client running on another machine cannot reach the API via its own loopback address; configure an appropriate trusted endpoint only after the service has been secured for that environment.
 
-1. Read public scenario metadata from `/api/v1/scenarios`.
-2. Create a session with a scenario ID and seed.
-3. Present only observations intended for the trainee; do not embed answer keys in the client build.
-4. Submit validated trainee events in order.
-5. Finalize the session and retrieve assessment/AAR results.
-6. Identify outputs as synthetic and training-only.
+## Included
 
-Do not connect the client to live aircraft or operational counter-drone equipment. Any future controller mapping must remain simulator-only until separately authorized and reviewed.
+- Unity project metadata and UGUI package manifest.
+- JSON API contracts and a UnityWebRequest client.
+- Runtime-generated training form with scenario prompt, response selection, event submission, and assessment completion.
+- Synthetic scenario only; no physical equipment or live aircraft control.
 
-## First scene
+## Current limitations
 
-Build one neutral training environment with selectable synthetic observations, scenario-state display, event logging, and a completion screen. Prioritize event correctness and repeatability over photorealism. Add Unity Test Framework Edit Mode and Play Mode tests once a Unity project has been created.
+- The client is a functional workflow prototype, not a finished 3D environment.
+- Only OBS-001 is selected by the initial UI; scenario discovery and instructor configuration are not yet exposed in the client.
+- The seed currently provides session reproducibility metadata; the current scenario data does not vary by seed.
+- Authentication, instructor/trainee roles, multi-user deployment, and network transport security are not implemented.
+- The Python CI workflow does not compile the Unity client. Open it in the supported editor and run a smoke test before treating the client as validated.
