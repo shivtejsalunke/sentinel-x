@@ -31,7 +31,7 @@ flowchart TD
 - **Adaptation engine:** identifies adequately supported competency gaps and recommends a relevant approved exercise. It never modifies a completed score.
 - **AAR generator:** summarizes recorded events, metric results, and flags. Explanations must be supported by saved evidence.
 - **Persistence:** SQLite in local development; repository code isolates storage concerns for later migration.
-- **Unity client:** planned consumer of scenario/session contracts. It is not currently a complete, importable Unity project.
+- **Unity client:** a runtime-generated UGUI training client consumes the scenario observation and session APIs for the synthetic OBS-001 workflow. A rendered 3D environment and editor-verified build remain outstanding.
 
 ## Assessment contract
 
@@ -51,7 +51,8 @@ A random seed, scenario version, and rubric version are retained to support repl
 |---|---|---|
 | `GET` | `/health` | Process health |
 | `GET` | `/api/v1/scenarios` | List scenario metadata without answer keys |
-| `GET` | `/api/v1/scenarios/{scenario_id}` | Retrieve a public scenario definition |
+| `GET` | `/api/v1/scenarios/{scenario_id}` | Retrieve public scenario metadata |
+| `GET` | `/api/v1/scenarios/{scenario_id}/observations` | Retrieve trainee prompts without answer keys |
 | `POST` | `/api/v1/sessions` | Create a session |
 | `POST` | `/api/v1/sessions/{session_id}/events` | Append a validated event |
 | `POST` | `/api/v1/sessions/{session_id}/complete` | Complete and assess a session |
