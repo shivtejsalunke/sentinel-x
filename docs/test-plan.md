@@ -39,13 +39,13 @@ Validate the scenario contract, event lifecycle, scoring calculations, adaptatio
 ## Engineering checks
 
 ```bash
-ruff check services/assessment
-ruff format --check services/assessment
-mypy services/assessment/app
+cd services/assessment
+ruff check app tests --select F
+mypy app
 pytest
 ```
 
-CI runs these checks for changes to the assessment service. A Unity build/test job must be added after Unity project metadata and a supported build runner are committed.
+CI runs these checks for changes to the assessment service. The Unity project has editor metadata and a runtime workflow, but no Unity build/test result is claimed because the configured editor has not been run in this environment.
 
 ## Test evidence and release gate
 
