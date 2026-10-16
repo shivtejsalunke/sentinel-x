@@ -1,0 +1,9 @@
+{
+  "scenario_id": "INVALID-001",
+  "version": "1.0.0",
+  "rubric_id": "RUBRIC-001",
+  "rubric_version": "1.0.0-provisional",
+  "difficulty_band": "beginner",
+  "learning_objectives": ["classification_accuracy"],
+  "observations": []
+}
