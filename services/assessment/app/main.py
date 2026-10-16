@@ -119,7 +119,16 @@ def complete_session(session_id: str) -> AssessmentResult:
     if session.status != "RUNNING": raise HTTPException(status_code=409,detail="session_not_running")
     scenario=scenarios().get(session.scenario_id)
     if scenario is None: raise HTTPException(status_code=500,detail="session_scenario_unavailable")
-    result=score_session(session,repo.get_events(session_id),ground_truth_for_session(scenario,session.seed))
+    events = repo.get_events(session_id)
+    submitted = {event.payload.get("observation_id") for event in events}
+    required = {item["observation_id"] for item in scenario["observations"]}
+    missing = sorted(required - submitted)
+    if missing:
+        raise HTTPException(
+            status_code=409,
+            detail={"code": "session_observations_incomplete", "missing_observation_ids": missing},
+        )
+    result=score_session(session,events,ground_truth_for_session(scenario,session.seed))
     try: return repo.complete_session(session_id,result)
     except LookupError as exc: raise HTTPException(status_code=404,detail=str(exc)) from exc
     except ValueError as exc: raise HTTPException(status_code=409,detail=str(exc)) from exc
