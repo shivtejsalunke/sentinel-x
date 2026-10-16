@@ -7,7 +7,7 @@
 
 SENTINEL-X is a desktop-first training system for controlled, reproducible simulation exercises. It connects scenario configuration, simulated observations, structured trainee decisions, deterministic assessment, after-action review (AAR), and targeted practice recommendations in one auditable workflow.
 
-The initial software baseline is local-first. The assessment service and scenario contracts can be tested independently of a 3D client; Unity is the intended simulation client, with source scaffolding under `simulation/`. No live aircraft, operational counter-drone equipment, or real-world autonomous control is connected.
+The initial software baseline is local-first. The Unity project under `simulation/` includes a runtime-generated training UI and API client for the synthetic OBS-001 workflow. A rendered 3D training environment and authored visual assets remain outstanding. No live aircraft, operational counter-drone equipment, or real-world autonomous control is connected.
 
 ## Core workflow
 
@@ -40,7 +40,7 @@ sentinel-x/
 
 | Component | Status in this repository |
 |---|---|
-| Scenario schema and sample scenarios | Implemented |
+| Scenario schema and synthetic sample scenarios | Implemented; examples remain provisional pending instructor review |
 | Session/event contracts and validation | Implemented |
 | Deterministic assessment and metrics | Implemented |
 | Rules-based practice recommendations | Implemented |
