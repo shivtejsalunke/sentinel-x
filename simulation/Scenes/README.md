@@ -1,1 +1,1 @@
-No finished Unity scenes are included yet. The first scene should exercise the assessment-service contract using synthetic scenario data and should not include direct control of physical equipment.
+The initial blank scene is at `Assets/Scenes/Training.unity` and is selected for builds. The runtime client generates its own training UI and exercises the assessment-service contract using synthetic scenario data. A rendered 3D training environment and authored observation assets are not included yet. No direct control of physical equipment is present.
