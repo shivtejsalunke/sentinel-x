@@ -1,0 +1,18 @@
+{
+  "scenario_id": "OBS-001",
+  "version": "1.0.0",
+  "title": "Baseline Observation and Classification",
+  "description": "Synthetic classroom exercise for structured observation, response categorization, and confidence recording.",
+  "rubric_id": "RUBRIC-001",
+  "rubric_version": "1.0.0-provisional",
+  "approval_status": "instructor_approved",
+  "difficulty_band": "beginner",
+  "learning_objectives": ["classification_accuracy", "decision_quality", "observation_quality", "reporting_completeness", "uncertainty_reporting"],
+  "allowed_response_categories": ["category_a", "category_b", "category_c", "no_observation"],
+  "environment": {"preset": "training_rural_day", "visibility_band": "normal"},
+  "observations": [
+    {"observation_id": "obs-001", "display_prompt": "Synthetic observation A. Select the best-supported training category.", "expected_category": "category_a", "is_relevant": true},
+    {"observation_id": "obs-002", "display_prompt": "Synthetic observation B. Select the best-supported training category.", "expected_category": "category_b", "is_relevant": true},
+    {"observation_id": "obs-003", "display_prompt": "Synthetic background observation. Use the no-observation category when appropriate.", "expected_category": "no_observation", "is_relevant": false}
+  ]
+}
