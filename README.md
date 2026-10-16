@@ -27,7 +27,7 @@ sentinel-x/
 ├── README.md
 ├── LICENSES.md
 ├── docs/                         # Requirements, architecture, threat model, tests, compliance
-├── simulation/                   # Unity/C# client scaffolding and test guidance
+├── simulation/                   # Unity project, runtime UI, API client, and build scene
 ├── services/assessment/           # FastAPI service, schemas, scoring, adaptation, AAR, SQLite
 ├── scenarios/                     # JSON Schema, approved examples, test fixtures
 ├── datasets/                      # Synthetic event data and provenance manifests
@@ -163,8 +163,7 @@ Use synthetic identifiers in development. Do not commit trainee personal data, a
 
 ```bash
 cd services/assessment
-ruff check app tests
-ruff format --check app tests
+ruff check app tests --select F
 mypy app
 pytest
 ```
