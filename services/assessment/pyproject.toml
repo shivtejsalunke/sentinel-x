@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "sentinel-x-assessment"
 version = "0.1.0"
 description = "Local-first, deterministic training assessment and after-action review service"
-readme = "../../README.md"
+readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "MIT" }
 dependencies = [
