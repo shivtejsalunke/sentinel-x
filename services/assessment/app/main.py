@@ -59,6 +59,30 @@ def get_scenario(scenario_id: str) -> dict[str,Any]:
     if item is None: raise HTTPException(status_code=404,detail="scenario_not_found")
     return public_scenario(item)
 
+@app.get("/api/v1/scenarios/{scenario_id}/observations")
+def get_scenario_observations(scenario_id: str) -> dict[str, Any]:
+    """Return trainee-facing prompts without scoring ground truth."""
+    try:
+        validate_identifier(scenario_id)
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    scenario = scenarios().get(scenario_id)
+    if scenario is None:
+        raise HTTPException(status_code=404, detail="scenario_not_found")
+    return {
+        "scenario_id": scenario_id,
+        "version": scenario["version"],
+        "allowed_response_categories": scenario.get("allowed_response_categories", []),
+        "observations": [
+            {
+                "observation_id": item["observation_id"],
+                "display_prompt": item.get("display_prompt", "Complete the assigned observation."),
+            }
+            for item in scenario["observations"]
+        ],
+    }
+
+
 @app.post("/api/v1/sessions",response_model=SessionRecord,status_code=status.HTTP_201_CREATED)
 def create_session(request: CreateSessionRequest) -> SessionRecord:
     for name,value in (("trainee_id",request.trainee_id),("scenario_id",request.scenario_id)):
