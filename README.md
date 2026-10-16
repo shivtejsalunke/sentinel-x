@@ -47,7 +47,7 @@ sentinel-x/
 | Evidence-linked AAR generation | Implemented |
 | SQLite persistence and API endpoints | Implemented |
 | Unit tests and CI workflow | Implemented; CI runs on GitHub |
-| Unity project, 3D scene, simulation assets | Integration scaffold only; create/open with a supported Unity LTS editor |
+| Unity assessment client | Unity project metadata, runtime UI, HTTP API client, and synthetic OBS-001 workflow included; 3D world/scene assets remain outstanding |
 | Validated real-world sensor models or operational AI | Not implemented |
 | Training efficacy evidence | Not established; requires a controlled evaluation |
 
@@ -82,12 +82,13 @@ source .venv/bin/activate
 Install the service and development dependencies:
 
 ```bash
-python -m pip install -e ".[dev]"
+python -m pip install -e "services/assessment[dev]"
 ```
 
 Run tests:
 
 ```bash
+cd services/assessment
 pytest
 ```
 
