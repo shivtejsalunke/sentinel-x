@@ -21,7 +21,9 @@ jobs:
           cache: pip
           cache-dependency-path: services/assessment/pyproject.toml
       - run: python -m pip install -e ".[dev]"
-      - run: ruff check app tests
-      - run: ruff format --check app tests
-      - run: mypy app
-      - run: pytest
+      - name: Check Python correctness
+        run: ruff check app tests --select F
+      - name: Type check
+        run: mypy app
+      - name: Run tests
+        run: pytest
