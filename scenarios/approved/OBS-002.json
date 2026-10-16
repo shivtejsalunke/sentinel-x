@@ -5,7 +5,7 @@
   "description": "Synthetic exercise using reduced observation quality to practise calibrated confidence and careful reporting.",
   "rubric_id": "RUBRIC-001",
   "rubric_version": "1.0.0-provisional",
-  "approval_status": "instructor_approved",
+  "approval_status": "provisional",
   "difficulty_band": "intermediate",
   "learning_objectives": ["classification_accuracy", "decision_quality", "observation_quality", "uncertainty_reporting"],
   "allowed_response_categories": ["category_a", "category_b", "category_c", "no_observation"],
