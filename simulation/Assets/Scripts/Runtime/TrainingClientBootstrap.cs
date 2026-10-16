@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 namespace SentinelX.Client
 {
@@ -18,7 +19,8 @@ namespace SentinelX.Client
         private Button startButton;
         private Button submitButton;
         private Button completeButton;
-        private Dropdown categoryDropdown;
+        private string selectedCategory = "category_a";
+        private readonly List<Button> categoryButtons = new List<Button>();
         private ScenarioObservationResponse scenario;
         private SessionResponse session;
         private int observationIndex;
@@ -47,6 +49,8 @@ namespace SentinelX.Client
             canvasObject.transform.SetParent(transform, false);
             var canvas = canvasObject.GetComponent<Canvas>();
             canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            var eventSystem = new GameObject("EventSystem", typeof(EventSystem), typeof(StandaloneInputModule));
+            eventSystem.transform.SetParent(transform, false);
             var scaler = canvasObject.GetComponent<CanvasScaler>();
             scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
             scaler.referenceResolution = new Vector2(1280, 800);
@@ -63,7 +67,18 @@ namespace SentinelX.Client
             traineeInput = AddInput(panel.transform, "Synthetic trainee ID", "trainee-demo");
             scenarioText = AddText(panel.transform, "Scenario: OBS-001 — Synthetic baseline", 18, 32);
             promptText = AddText(panel.transform, "Select Start Scenario to load the trainee-facing prompts.", 20, 110);
-            categoryDropdown = AddDropdown(panel.transform);
+            AddText(panel.transform, "Response category", 14, 24);
+            var categoryRow = new GameObject("Response Categories", typeof(RectTransform), typeof(HorizontalLayoutGroup));
+            categoryRow.transform.SetParent(panel.transform, false);
+            var categoryLayout = categoryRow.GetComponent<HorizontalLayoutGroup>();
+            categoryLayout.spacing = 8;
+            categoryLayout.childForceExpandWidth = true;
+            categoryLayout.childControlHeight = true;
+            categoryButtons.Add(AddButton(categoryRow.transform, "Category A", () => SelectCategory("category_a")));
+            categoryButtons.Add(AddButton(categoryRow.transform, "Category B", () => SelectCategory("category_b")));
+            categoryButtons.Add(AddButton(categoryRow.transform, "Category C", () => SelectCategory("category_c")));
+            categoryButtons.Add(AddButton(categoryRow.transform, "No observation", () => SelectCategory("no_observation")));
+            SelectCategory(selectedCategory);
             var buttons = new GameObject("Actions", typeof(RectTransform), typeof(HorizontalLayoutGroup));
             buttons.transform.SetParent(panel.transform, false);
             var row = buttons.GetComponent<HorizontalLayoutGroup>();
@@ -102,8 +117,9 @@ namespace SentinelX.Client
                     startButton.interactable = true;
                     submitButton.interactable = true;
                     completeButton.interactable = true;
-                    categoryDropdown.ClearOptions();
-                    categoryDropdown.AddOptions(new List<string>(scenario.allowed_response_categories));
+                    selectedCategory = scenario.allowed_response_categories.Length > 0
+                        ? scenario.allowed_response_categories[0] : "category_a";
+                    SelectCategory(selectedCategory);
                     ShowCurrentObservation();
                     SetStatus("Session " + session.session_id + " started. Seed: " + seed);
                 }, Failed));
@@ -122,7 +138,7 @@ namespace SentinelX.Client
                 payload = new EventPayload
                 {
                     observation_id = prompt.observation_id,
-                    response_category = categoryDropdown.options[categoryDropdown.value].text,
+                    response_category = selectedCategory,
                     confidence = 0.8f
                 }
             };
@@ -213,17 +229,19 @@ namespace SentinelX.Client
             return input;
         }
 
-        private static Dropdown AddDropdown(Transform parent)
+        private void SelectCategory(string category)
         {
-            var item = new GameObject("Response category", typeof(RectTransform), typeof(Image), typeof(Dropdown), typeof(LayoutElement));
-            item.transform.SetParent(parent, false);
-            item.GetComponent<Image>().color = new Color(0.16f, 0.18f, 0.23f);
-            item.GetComponent<LayoutElement>().preferredHeight = 38;
-            var label = AddText(item.transform, "Select a response category", 16, 30);
-            var dropdown = item.GetComponent<Dropdown>();
-            dropdown.captionText = label;
-            dropdown.AddOptions(new List<string> { "category_a", "category_b", "category_c", "no_observation" });
-            return dropdown;
+            selectedCategory = category;
+            var names = new[] { "category_a", "category_b", "category_c", "no_observation" };
+            for (var i = 0; i < categoryButtons.Count; i++)
+            {
+                var button = categoryButtons[i];
+                if (button == null) continue;
+                var image = button.GetComponent<Image>();
+                image.color = names[i] == selectedCategory
+                    ? new Color(0.12f, 0.48f, 0.32f)
+                    : new Color(0.16f, 0.18f, 0.23f);
+            }
         }
 
         private static Button AddButton(Transform parent, string label, Action action)
